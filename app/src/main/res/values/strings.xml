@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">March on Citadel</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="theme">March on\nCitadel</string>
+
+    <string name="title_activity_menu">Menu</string>
+</resources>
