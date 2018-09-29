@@ -8,6 +8,9 @@ import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 
+/**
+ * MainActivity is going to create a fullscreen background to let the other class to draw and update.
+ */
 public class MainActivity extends Activity {
 
     @Override

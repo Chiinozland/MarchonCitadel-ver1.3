@@ -1,6 +1,7 @@
 package com.chi.marchoncitadel;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.support.constraint.solver.widgets.Rectangle;
@@ -16,18 +17,18 @@ public class Obstacle implements GameObject {
         return rectangle;
     }
 
-    public void incrementY (float y){
-        rectangle.top += y;
-        rectangle.bottom +=y;
-        rectangle2.top += y;
-        rectangle2.bottom +=y;
-
-    }
+//    public void incrementX (float x){
+//        rectangle.left += x;
+//        rectangle.right += x;
+//        rectangle2.left += x;
+//        rectangle2.right += x;
+//
+//    }
 
     public Obstacle(int rectHeight, int color, int startX, int startY, int playerGap){
-        this.color = color;
-        rectangle = new Rect(0,startY, startX, startY+rectHeight);
-        rectangle2 = new Rect(startX+playerGap, startY, Constants.SCREEN_WIDTH,startY+rectHeight);
+        this.color = Color.BLUE;
+        rectangle = new Rect(0,(Constants.SCREEN_HEIGHT-rectHeight)/2, startX, (Constants.SCREEN_HEIGHT+rectHeight)/2);
+        rectangle2 = new Rect(startX+playerGap, (Constants.SCREEN_HEIGHT-rectHeight)/2, Constants.SCREEN_WIDTH,(Constants.SCREEN_HEIGHT+rectHeight)/2);
 
 
     }

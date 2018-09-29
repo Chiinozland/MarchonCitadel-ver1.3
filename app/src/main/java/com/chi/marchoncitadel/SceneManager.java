@@ -5,6 +5,9 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+/**
+ * SceneManager focus on controlling the units, including troops and buildings.
+ */
 public class SceneManager {
     private ArrayList<Scene> scenes = new ArrayList<>();
     public static int ACTIVE_SCENE;
