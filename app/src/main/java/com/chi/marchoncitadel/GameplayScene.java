@@ -60,20 +60,20 @@ public class GameplayScene implements Scene {
         bottomMine.update(bottomMinePoint);
 
 
-        //set up enemy citadel
+        //set up enemy buildings
         enemyCitadel = new Citadel(new Rect(0,0,200,200),Color.RED);
         enemyCitadelPoint = new Point(Constants.SCREEN_WIDTH/2,50);
         enemyCitadel.update(enemyCitadelPoint);
         topMine = new Citadel(new Rect(0,0,200,200), Color.YELLOW);
         topMinePoint = new Point(Constants.SCREEN_WIDTH/6, Constants.SCREEN_HEIGHT/6);
         topMine.update(topMinePoint);
-        topMeleeBarrack = new Citadel(new Rect(100,100,200,200), Color.BLACK);
+        topMeleeBarrack = new Citadel(new Rect(100,100,200,200), Color.RED);
         topMeleeBarrackPoint = new Point(4*Constants.SCREEN_WIDTH/5, 50);
         topMeleeBarrack.update(topMeleeBarrackPoint);
-        topRangedBarrack = new Citadel(new Rect(100,100,200,200), Color.BLACK);
+        topRangedBarrack = new Citadel(new Rect(100,100,200,200), Color.RED);
         topRangedBarrackPoint = new Point(2*Constants.SCREEN_WIDTH/3, 50);
         topRangedBarrack.update(topRangedBarrackPoint);
-        topMinerFactory = new Citadel(new Rect(100,100,200,200), Color.BLACK);
+        topMinerFactory = new Citadel(new Rect(100,100,200,200), Color.RED);
         topMinerFactoryPoint = new Point(Constants.SCREEN_WIDTH/6, 50);
         topMinerFactory.update(topMinerFactoryPoint);
 
@@ -117,6 +117,9 @@ public class GameplayScene implements Scene {
         }
     }
 
+
+
+
     @Override
     public void draw(Canvas canvas){
         canvas.drawColor(Color.GRAY);
@@ -144,12 +147,15 @@ public class GameplayScene implements Scene {
     public void update(){
         if (!gameOver){
             player.update(playerPoint);
-            myCitadel.update(myCitadelPoint);
             obstacleManager.update();
-            if (obstacleManager.playerCollide(player)){
-                gameOver = true;
-                gameOverTime = System.currentTimeMillis();
-            }
+            //if (obstacleManager.playerCollide(player)){
+
+                //gameOver = true;
+                //gameOverTime = System.currentTimeMillis();
+            //}
+        }
+        if (!gameOver){
+            player.update(playerPoint);
         }
 
     }

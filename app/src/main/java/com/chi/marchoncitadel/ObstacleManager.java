@@ -15,7 +15,7 @@ public class ObstacleManager {
     private int color;
     private long startTime;
     private long initTime;
-    private int score = 0;
+    private int score = 100;
 
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color){
         this.playerGap = playerGap;
@@ -32,6 +32,7 @@ public class ObstacleManager {
         for (Obstacle ob: obstacles){
             if (ob.playerCollide(player))
                 return true;
+
         }
         return false;
     }
@@ -63,8 +64,8 @@ public class ObstacleManager {
         for (Obstacle ob: obstacles)
             ob.draw(canvas);
         Paint paint = new Paint();
-        paint.setTextSize(100);
-        paint.setColor(Color.MAGENTA);
-        canvas.drawText(""+ score, 50,50 + paint.descent() - paint.ascent(), paint);
+        paint.setTextSize(50);
+        paint.setColor(Color.YELLOW);
+        canvas.drawText("GOLD: "+ score, 50,6*Constants.SCREEN_HEIGHT/7 + paint.descent() - paint.ascent(), paint);
     }
 }

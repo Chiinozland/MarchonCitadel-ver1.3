@@ -12,6 +12,7 @@ public class Obstacle implements GameObject {
     private int color;
     private int startX;
     private int playerGap;
+    private Rect bottomMine;
 
     public Rect getRectangle(){
         return rectangle;
@@ -36,6 +37,11 @@ public class Obstacle implements GameObject {
     public boolean playerCollide(RectPlayer player){
         return Rect.intersects(rectangle, player.getRectangle())||Rect.intersects(rectangle2, player.getRectangle());
     }
+
+    public boolean addGold(RectPlayer player){
+        return Rect.intersects(bottomMine, player.getRectangle());
+    }
+
 
     @Override
     public void draw(Canvas canvas){
