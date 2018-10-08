@@ -1,10 +1,13 @@
-package com.chi.marchoncitadel;
+package com.chi.marchoncitadel.drawbuildings;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.support.constraint.solver.widgets.Rectangle;
+
+import com.chi.marchoncitadel.Constants;
+import com.chi.marchoncitadel.GameObject;
+import com.chi.marchoncitadel.spawnunits.RectPlayer;
 
 public class Obstacle implements GameObject {
     private Rect rectangle;

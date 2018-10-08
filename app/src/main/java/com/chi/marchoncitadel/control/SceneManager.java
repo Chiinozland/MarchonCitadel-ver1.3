@@ -1,7 +1,9 @@
-package com.chi.marchoncitadel;
+package com.chi.marchoncitadel.control;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;
+
+import com.chi.marchoncitadel.drawbuildings.GameplayScene;
 
 import java.util.ArrayList;
 

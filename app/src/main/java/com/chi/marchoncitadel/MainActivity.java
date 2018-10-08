@@ -1,12 +1,12 @@
 package com.chi.marchoncitadel;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.chi.marchoncitadel.control.GamePanel;
 
 /**
  * MainActivity is going to create a fullscreen background to let the other class to draw and update.

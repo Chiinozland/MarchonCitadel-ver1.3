@@ -3,6 +3,8 @@ package com.chi.marchoncitadel;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
+import com.chi.marchoncitadel.control.GamePanel;
+
 /**
  * MainThread is the class to generate game loops, and cap the loop as maximum 30 frames per second.
  */

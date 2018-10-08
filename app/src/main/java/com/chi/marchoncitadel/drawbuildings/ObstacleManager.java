@@ -1,8 +1,11 @@
-package com.chi.marchoncitadel;
+package com.chi.marchoncitadel.drawbuildings;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+
+import com.chi.marchoncitadel.Constants;
+import com.chi.marchoncitadel.spawnunits.RectPlayer;
 
 import java.util.ArrayList;
 
@@ -38,7 +41,7 @@ public class ObstacleManager {
     }
 
     private void populateObstacles(){
-        int currY = -5*Constants.SCREEN_HEIGHT/4;
+        int currY = -5* Constants.SCREEN_HEIGHT/4;
         while(currY < 0 ){
             int xStart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
             obstacles.add(new Obstacle(obstacleHeight,color,xStart,currY,playerGap));

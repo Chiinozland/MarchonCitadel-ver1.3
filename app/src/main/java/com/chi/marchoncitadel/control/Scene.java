@@ -1,4 +1,4 @@
-package com.chi.marchoncitadel;
+package com.chi.marchoncitadel.control;
 
 import android.graphics.Canvas;
 import android.view.MotionEvent;

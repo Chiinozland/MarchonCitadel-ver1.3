@@ -1,10 +1,12 @@
-package com.chi.marchoncitadel;
+package com.chi.marchoncitadel.spawnunits;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.constraint.solver.widgets.Rectangle;
+
+import com.chi.marchoncitadel.GameObject;
 
 public class RectPlayer implements GameObject {
     private Rect rectangle;
