@@ -3,7 +3,7 @@ package com.chi.marchoncitadel.control;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
-import com.chi.marchoncitadel.drawbuildings.GameplayScene;
+import com.chi.marchoncitadel.GameplayScene;
 
 import java.util.ArrayList;
 
