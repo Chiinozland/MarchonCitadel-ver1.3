@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.provider.Settings;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -24,9 +25,23 @@ public class GameView extends SurfaceView implements Runnable {
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
     private Enemy[] enemies;
-    private int enemyCount = 3;
+    private int enemyCount = 2;
+    private Friend friend;
     private boolean movingPlayer = false;
     private ArrayList<Star> stars = new ArrayList<Star>();
+    private Boom boom;
+
+    // a screenY holder
+    int screenY;
+
+    // counting number of missed enemy
+    int countMiss;
+
+    // indicator of coming enemy
+    boolean flag;
+
+    // indicator of game over
+    private boolean isGameOver;
 
 
     //Class constructor
@@ -50,6 +65,14 @@ public class GameView extends SurfaceView implements Runnable {
         for (int i = 0; i < enemyCount; i++){
             enemies[i] = new Enemy(context,screenX,screenY);
         }
+
+        boom = new Boom(context);
+
+        friend = new Friend(context, screenX, screenY);
+
+        this.screenY = screenY;
+        countMiss = 0;
+        isGameOver = false;
     }
 
     @Override
@@ -64,12 +87,59 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void update(){
         player.update();
+        boom.setX(-250);
+        boom.setY(-250);
+
         for (Star generateStars: stars){
             generateStars.update(player.getSpeed());
         }
+
+
+
         for (int i = 0; i < enemyCount; i++){
+            if (enemies[i].getY() == 0){
+                flag = true;
+            }
             enemies[i].update(player.getSpeed());
+            if (Rect.intersects(player.getDetectCollision(),enemies[i].getDetectCollision())){
+                boom.setX(enemies[i].getX());
+                boom.setY(enemies[i].getY());
+                enemies[i].setY(- 200);
+            } else {
+                if (flag) {
+                    //if player's y coordinate is more than the enemies's x coordinate.i.e. enemy has just passed across the player
+                    if (enemies[i].getDetectCollision().exactCenterY() >= Constants.SCREEN_HEIGHT) {
+                        //increment countMisses
+                        countMiss++;
+
+                        //setting the flag false so that the else part is executed only when new enemy enters the screen
+                        flag = false;
+                        //if no of Misses is equal to 3, then game is over.
+                        if (countMiss == 3) {
+                        //setting playing false to stop the game.
+                        playing = false;
+                        isGameOver = true;
+                        }
+                    }
+                }
+            }
+
+            friend.update(player.getSpeed());
+            //checking for a collision between player and a friend
+            if(Rect.intersects(player.getDetectCollision(),friend.getDetectCollision())){
+
+                //displaying the boom at the collision
+                boom.setX(friend.getX());
+                boom.setY(friend.getY());
+                //setting playing false to stop the game
+                //playing = false;
+                //setting the isGameOver true as the game is over
+                //isGameOver = true;
+            }
         }
+
+        friend.update(player.getSpeed());
+
 
     }
 
@@ -79,6 +149,7 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawColor(Color.BLACK);
             //canvas.drawBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.battlefield),0,0,paint);
             paint.setColor(Color.WHITE);
+            paint.setTextSize(20);
 
             for (Star generateStars: stars){
                 paint.setStrokeWidth(generateStars.getStarWidth());
@@ -94,6 +165,29 @@ public class GameView extends SurfaceView implements Runnable {
             for (int i = 0; i < enemyCount; i++){
                 canvas.drawBitmap(enemies[i].getBitmap(), enemies[i].getX(), enemies[i].getY(),paint);
             }
+
+            canvas.drawBitmap(
+                    boom.getBitmap(),
+                    boom.getX(),
+                    boom.getY(),
+                    paint
+            );
+
+            canvas.drawBitmap(
+                    friend.getBitmap(),
+                    friend.getX(),
+                    friend.getY(),
+                    paint
+            );
+
+            if (isGameOver){
+                paint.setTextSize(150);
+                paint.setTextAlign(Paint.Align.CENTER);
+
+                int yPos = (int)((canvas.getHeight()/2) - ((paint.descent() + paint.ascent())/2));
+                canvas.drawText("Game Over", canvas.getWidth()/2, yPos, paint);
+            }
+
             surfaceHolder.unlockCanvasAndPost(canvas);
 
         }

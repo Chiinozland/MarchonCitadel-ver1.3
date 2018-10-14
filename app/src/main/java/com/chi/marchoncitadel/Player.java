@@ -24,7 +24,7 @@ public class Player implements GameObject{
     private int speed = 0;
     private boolean boosting;
     private final int GRAVITY = -10;
-
+    private Rect detectCollision;
 
 
 
@@ -40,10 +40,9 @@ public class Player implements GameObject{
         minX = 0;
         maxY = screenY - bitmap.getHeight();
         minY = 0;
-
-
-
         boosting = false;
+
+        detectCollision = new Rect(playerPoint.x, playerPoint.y,bitmap.getWidth(),bitmap.getHeight());
 
     }
 
@@ -87,8 +86,16 @@ public class Player implements GameObject{
             playerPoint.y = maxY;
         }
 
+        detectCollision.left = playerPoint.x;
+        detectCollision.top = playerPoint.y;
+        detectCollision.right = playerPoint.x + bitmap.getWidth();
+        detectCollision.bottom = playerPoint.y + bitmap.getHeight();
     }
 
+
+    public Rect getDetectCollision(){
+        return detectCollision;
+    }
 
     public Bitmap getBitmap() {
         return bitmap;

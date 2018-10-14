@@ -7,12 +7,12 @@ import android.graphics.Rect;
 
 import java.util.Random;
 
-public class Enemy {
+public class Friend {
     private Bitmap bitmap;
-
     private int x;
     private int y;
     private int speed = 1;
+
     private int maxX;
     private int minX;
 
@@ -21,32 +21,24 @@ public class Enemy {
 
     private Rect detectCollision;
 
-    public Enemy(Context context, int screenX, int screenY) {
-        //getting bitmap from drawable resource
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy);
 
-        //initializing min and max coordinates
+    public Friend(Context context, int screenX, int screenY) {
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.friend);
         maxX = screenX;
         maxY = screenY;
         minX = 0;
         minY = 0;
-
-        //generating a random coordinate to add enemy
         Random generator = new Random();
         speed = generator.nextInt(6) + 10;
         y = 0;
         x = generator.nextInt(maxX) - bitmap.getWidth();
-        detectCollision = new Rect(x, y, bitmap.getWidth(),bitmap.getHeight());
+        detectCollision = new Rect(x, y, bitmap.getWidth(), bitmap.getHeight());
     }
 
-
     public void update(int playerSpeed) {
-        //increasing y coordinate so that enemy will move top to bottom
         y += playerSpeed;
         y += speed;
-        //if the enemy reaches the bottom edge
         if (y > maxY + bitmap.getHeight()) {
-            //adding the enemy again to the top edge
             Random generator = new Random();
             speed = generator.nextInt(10) + 10;
             y = minY;
@@ -59,14 +51,12 @@ public class Enemy {
         detectCollision.bottom = y + bitmap.getHeight();
     }
 
-    public void setY(int y) {
-        this.y = y;
-    }
 
     public Rect getDetectCollision() {
         return detectCollision;
     }
 
+    //getters
     public Bitmap getBitmap() {
         return bitmap;
     }
@@ -77,9 +67,5 @@ public class Enemy {
 
     public int getY() {
         return y;
-    }
-
-    public int getSpeed() {
-        return speed;
     }
 }
