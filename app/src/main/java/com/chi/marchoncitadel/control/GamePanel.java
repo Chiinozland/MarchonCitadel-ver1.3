@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.chi.marchoncitadel.Constants;
 import com.chi.marchoncitadel.MainThread;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
@@ -16,6 +17,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         getHolder().addCallback(this);
 
+        Constants.CURRENT_CONTEXT = context;
         thread = new MainThread(getHolder(), this);
 
         manager = new SceneManager();
