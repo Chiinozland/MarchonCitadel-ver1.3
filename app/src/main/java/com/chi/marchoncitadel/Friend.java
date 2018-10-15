@@ -36,7 +36,7 @@ public class Friend {
     }
 
     public void update(int playerSpeed) {
-        y += playerSpeed;
+        //y += playerSpeed;
         y += speed;
         if (y > maxY + bitmap.getHeight()) {
             Random generator = new Random();

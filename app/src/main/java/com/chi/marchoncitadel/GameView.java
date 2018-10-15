@@ -109,6 +109,33 @@ public class GameView extends SurfaceView implements Runnable {
     private void update(){
         score++;
 
+        //try Gyroscopic control
+//        if (frameTime < Constants.INIT_TIME)
+//            frameTime = Constants.INIT_TIME;
+//        int elapsedTime = (int)(System.currentTimeMillis() - frameTime);
+//        frameTime = System.currentTimeMillis();
+//        if (orientationData.getOrientation() != null && orientationData.getStartOrientation() != null) {
+//            float pitch = orientationData.getOrientation()[1] - orientationData.getStartOrientation()[1];
+//            float roll = orientationData.getOrientation()[2] - orientationData.getStartOrientation()[2];
+//            float xSpeed = 2 * roll * Constants.SCREEN_WIDTH/1000f;
+//            float ySpeed = pitch * Constants.SCREEN_HEIGHT/1000f;
+//
+//            playerPoint.x += Math.abs(xSpeed * elapsedTime) > 5 ? xSpeed * elapsedTime : 0;
+//            playerPoint.y -= Math.abs(ySpeed * elapsedTime) > 5 ? ySpeed * elapsedTime : 0;
+//        }
+
+        // set player not going outbound
+//        if (playerPoint.x <0)
+//            playerPoint.x = 0;
+//        else if (playerPoint.x > Constants.SCREEN_WIDTH)
+//            playerPoint.x = Constants.SCREEN_WIDTH;
+//        if (playerPoint.y <0)
+//            playerPoint.y = 0;
+//        else if (playerPoint.y > Constants.SCREEN_HEIGHT)
+//            playerPoint.y = Constants.SCREEN_HEIGHT;
+
+
+
         player.update();
         boom.setX(-250);
         boom.setY(-250);
@@ -138,8 +165,8 @@ public class GameView extends SurfaceView implements Runnable {
 
                         //setting the flag false so that the else part is executed only when new enemy enters the screen
                         flag = false;
-                        //if no of Misses is equal to 3, then game is over.
-                        if (countMiss == 3) {
+                        //if no of Misses is equal to 5, then game is over.
+                        if (countMiss == 5) {
                         //setting playing false to stop the game.
                         playing = false;
                         isGameOver = true;
@@ -206,6 +233,7 @@ public class GameView extends SurfaceView implements Runnable {
 
             paint.setTextSize(30);
             canvas.drawText("Score:" + score, 100, 50 , paint);
+            canvas.drawText("missed:" + countMiss, 100, 80, paint);
 
             canvas.drawBitmap(
                     player.getBitmap(),
@@ -280,6 +308,7 @@ public class GameView extends SurfaceView implements Runnable {
                 player.setBoosting();
 
                 break;
+
 
             case MotionEvent.ACTION_UP:
                 player.stopBoosting();

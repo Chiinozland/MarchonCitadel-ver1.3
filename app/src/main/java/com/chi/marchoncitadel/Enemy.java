@@ -26,8 +26,8 @@ public class Enemy {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy);
 
         //initializing min and max coordinates
-        maxX = screenX;
-        maxY = screenY;
+        maxX = Constants.SCREEN_WIDTH;
+        maxY = Constants.SCREEN_HEIGHT;
         minX = 0;
         minY = 0;
 
@@ -42,7 +42,7 @@ public class Enemy {
 
     public void update(int playerSpeed) {
         //increasing y coordinate so that enemy will move top to bottom
-        y += playerSpeed;
+
         y += speed;
         //if the enemy reaches the bottom edge
         if (y > maxY + bitmap.getHeight()) {

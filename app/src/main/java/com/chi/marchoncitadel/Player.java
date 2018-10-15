@@ -62,7 +62,7 @@ public class Player implements GameObject{
 
     public void update(){
         if (boosting){
-            speed += 2;
+            speed += 5;
         } else {
             speed -= 5;
         }

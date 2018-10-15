@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageButton playBtn;
     private ImageButton scoreBtn;
+    private ImageButton marchBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +34,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         playBtn = findViewById(R.id.playBtn);
         scoreBtn = findViewById(R.id.scoreBtn);
+        marchBtn = findViewById(R.id.marchBtn);
 
         //adding click listener to buttons
 
         playBtn.setOnClickListener(this);
         scoreBtn.setOnClickListener(this);
+        marchBtn.setOnClickListener(this);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         Constants.SCREEN_HEIGHT = dm.heightPixels;
         Constants.SCREEN_WIDTH = dm.widthPixels;
+        Constants.INIT_TIME = System.currentTimeMillis();
 
     }
 
@@ -53,6 +57,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (v == scoreBtn){
             startActivity(new Intent(MainActivity.this, HighScoreActivity.class));
+        }
+        if (v == marchBtn){
+            setContentView(new GamePanel(this));
         }
     }
 }
