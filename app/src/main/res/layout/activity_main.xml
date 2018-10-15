@@ -21,9 +21,18 @@
         android:id="@+id/playBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/scoreBtn"
+        android:background="@drawable/play_now" />
+
+    <ImageButton
+        android:id="@+id/scoreBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/play_now" />
+        android:background="@drawable/highscore" />
+
 
 
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.chi.marchoncitadel;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,6 +15,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameView extends SurfaceView implements Runnable {
     //boolean to check if the game is playing or not
@@ -30,6 +33,12 @@ public class GameView extends SurfaceView implements Runnable {
     private boolean movingPlayer = false;
     private ArrayList<Star> stars = new ArrayList<Star>();
     private Boom boom;
+    int score;
+    int highScore[] = new int[4];
+    SharedPreferences sharedPreferences;
+    Context context;
+    private OrientationData orientationData;
+    private long frameTime;
 
     // a screenY holder
     int screenY;
@@ -38,7 +47,7 @@ public class GameView extends SurfaceView implements Runnable {
     int countMiss;
 
     // indicator of coming enemy
-    boolean flag;
+    boolean flag = false;
 
     // indicator of game over
     private boolean isGameOver;
@@ -73,6 +82,18 @@ public class GameView extends SurfaceView implements Runnable {
         this.screenY = screenY;
         countMiss = 0;
         isGameOver = false;
+
+        score = 0;
+        sharedPreferences = context.getSharedPreferences("SHAR_PREF_NAME", Context.MODE_PRIVATE);
+
+        //initialse high score array with previous value
+        highScore[0] = sharedPreferences.getInt("score1", 0);
+        highScore[1] = sharedPreferences.getInt("score2", 0);
+        highScore[2] = sharedPreferences.getInt("score3", 0);
+        highScore[3] = sharedPreferences.getInt("score4", 0);
+
+        this.context = context;
+
     }
 
     @Override
@@ -86,6 +107,8 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void update(){
+        score++;
+
         player.update();
         boom.setX(-250);
         boom.setY(-250);
@@ -104,7 +127,8 @@ public class GameView extends SurfaceView implements Runnable {
             if (Rect.intersects(player.getDetectCollision(),enemies[i].getDetectCollision())){
                 boom.setX(enemies[i].getX());
                 boom.setY(enemies[i].getY());
-                enemies[i].setY(- 200);
+                enemies[i].setY(+30000);
+
             } else {
                 if (flag) {
                     //if player's y coordinate is more than the enemies's x coordinate.i.e. enemy has just passed across the player
@@ -119,6 +143,23 @@ public class GameView extends SurfaceView implements Runnable {
                         //setting playing false to stop the game.
                         playing = false;
                         isGameOver = true;
+
+                        for (int s = 0; s <4; s++) {
+                            if (highScore[s] < score){
+                                final int finalScore = s;
+                                highScore[s] = score;
+                                break;
+
+                            }
+                            SharedPreferences.Editor e =sharedPreferences.edit();
+                            for (int v = 0; v < 4; v++){
+                                int scoreNum = v + 1;
+                                e.putInt("score" + scoreNum, highScore[v]);
+                            }
+                            e.apply();
+
+
+                        }
                         }
                     }
                 }
@@ -131,23 +172,30 @@ public class GameView extends SurfaceView implements Runnable {
                 //displaying the boom at the collision
                 boom.setX(friend.getX());
                 boom.setY(friend.getY());
-                //setting playing false to stop the game
-                //playing = false;
-                //setting the isGameOver true as the game is over
-                //isGameOver = true;
+
+                //decrease score when collide friend
+                score -= 5;
             }
         }
 
-        friend.update(player.getSpeed());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        for (int s=0; s < 4; s++){
+            int scoreNum = s+1;
+            editor.putInt("score"+scoreNum,highScore[s]);
+        }
 
 
+
+    }
+    public void reset(){
+        isGameOver = false;
+        playing = true;
     }
 
     private void draw(){
         if (surfaceHolder.getSurface().isValid()){
             canvas = surfaceHolder.lockCanvas();
             canvas.drawColor(Color.BLACK);
-            //canvas.drawBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.battlefield),0,0,paint);
             paint.setColor(Color.WHITE);
             paint.setTextSize(20);
 
@@ -155,6 +203,9 @@ public class GameView extends SurfaceView implements Runnable {
                 paint.setStrokeWidth(generateStars.getStarWidth());
                 canvas.drawPoint(generateStars.getX(),generateStars.getY(),paint);
             }
+
+            paint.setTextSize(30);
+            canvas.drawText("Score:" + score, 100, 50 , paint);
 
             canvas.drawBitmap(
                     player.getBitmap(),
@@ -232,7 +283,13 @@ public class GameView extends SurfaceView implements Runnable {
 
             case MotionEvent.ACTION_UP:
                 player.stopBoosting();
+
                 break;
+        }
+        if (isGameOver){
+            if (motionEvent.getAction()==motionEvent.ACTION_DOWN){
+                context.startActivity(new Intent(context, MainActivity.class));
+            }
         }
         return true;
     }

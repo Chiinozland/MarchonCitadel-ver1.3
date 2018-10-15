@@ -21,6 +21,7 @@ import com.chi.marchoncitadel.control.GamePanel;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton playBtn;
+    private ImageButton scoreBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,28 +32,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         playBtn = findViewById(R.id.playBtn);
+        scoreBtn = findViewById(R.id.scoreBtn);
 
-        //adding click listener to playBtn
+        //adding click listener to buttons
 
         playBtn.setOnClickListener(this);
-
-
-        //be back soon
-
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-        //        WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        scoreBtn.setOnClickListener(this);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         Constants.SCREEN_HEIGHT = dm.heightPixels;
         Constants.SCREEN_WIDTH = dm.widthPixels;
-//
-        //setContentView(new GamePanel(this));
+
     }
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(this, GameActivity.class));
+        if (v == playBtn) {
+            startActivity(new Intent(MainActivity.this, GameActivity.class));
+        }
+        if (v == scoreBtn){
+            startActivity(new Intent(MainActivity.this, HighScoreActivity.class));
+        }
     }
 }
